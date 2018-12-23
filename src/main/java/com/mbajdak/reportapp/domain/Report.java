@@ -1,10 +1,13 @@
 package com.mbajdak.reportapp.domain;
 
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
@@ -12,8 +15,16 @@ import javax.persistence.Table;
 @Table(name = "report")
 public class Report {
 
-    @EmbeddedId
-    private ReportPK reportPK;
+    @Id
+    @Column(name = "report_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name = "character_name")
+    private String characterName;
+
+    @Column(name = "planet_name")
+    private String planetName;
 
     @Column(name = "film_id")
     private Long filmId;
