@@ -4,9 +4,9 @@ import com.mbajdak.reportapp.domain.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Integer> {
-    Optional<Report> findReportsByCharacterNameContainsAndPlanetNameEquals(String characterPhrase, String planetName);
+    List<Report> findReportsByCharacterNameContainsAndPlanetNameEquals(String characterPhrase, String planetName);
 }
