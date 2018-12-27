@@ -1,7 +1,6 @@
 package com.mbajdak.reportapp.domain;
 
 import lombok.Data;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
