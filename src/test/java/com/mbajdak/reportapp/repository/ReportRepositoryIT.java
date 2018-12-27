@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.mbajdak.reportapp.TestReportFactory.getTestReport;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -45,7 +47,7 @@ public class ReportRepositoryIT {
     }
 
     @Test
-    @DisplayName("Test finding by character phrase and planet name")
+    @DisplayName("Test finding by character phrase and same planet name")
     public void findReportsByCharacterNameContainsAndPlanetNameEqualsTest() {
         // given
         Report testReport1 = getTestReport("Test11", "Planet", 1L,
@@ -62,6 +64,27 @@ public class ReportRepositoryIT {
         List<Report> found = reportRepository.findReportsByCharacterNameContainsAndPlanetNameEquals(
                 "1", "Planet");
         assertEquals(2, found.size());
-        // TODO: check found reports
+        assertThat(found).contains(saved1, saved2);
+    }
+
+    @Test
+    @DisplayName("Test finding by character phrase and different planet names")
+    public void findReportsByCharacterNameContainsAndPlanetNameEqualsTest1() {
+        // given
+        Report testReport1 = getTestReport("Test11", "Planet1", 1L,
+                "Film Name", 1L, 1L, null);
+        Report testReport2 = getTestReport("Test12", "Planet2", 1L,
+                "Film Name", 1L, 1L, null);
+        Report testReport3 = getTestReport("Test13", "Planet1", 1L,
+                "Film Name", 1L, 1L, null);
+        // when
+        Report saved1 = reportRepository.save(testReport1);
+        Report saved2 = reportRepository.save(testReport2);
+        Report saved3 = reportRepository.save(testReport3);
+        // then
+        List<Report> found = reportRepository.findReportsByCharacterNameContainsAndPlanetNameEquals(
+                "1", "Planet1");
+        assertEquals(2, found.size());
+        assertThat(found).contains(saved1, saved3);
     }
 }
