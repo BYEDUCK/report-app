@@ -2,6 +2,7 @@ package com.mbajdak.reportapp.repository;
 
 import com.mbajdak.reportapp.domain.Report;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,12 +22,14 @@ public class ReportRepositoryIT {
     ReportRepository reportRepository;
 
     @Test
+    @DisplayName("Test empty db returns empty list")
     public void emptyTableTest() {
         List<Report> found = reportRepository.findAll();
         assertEquals(found.size(), 0);
     }
 
     @Test
+    @DisplayName("Test insertion of a report")
     public void insertionTest() {
         // given
         Report testReport = getTestReport("Test Character Name", "Test Planet Name", 1L,
@@ -42,6 +45,7 @@ public class ReportRepositoryIT {
     }
 
     @Test
+    @DisplayName("Test finding by character phrase and planet name")
     public void findReportsByCharacterNameContainsAndPlanetNameEqualsTest() {
         // given
         Report testReport1 = getTestReport("Test11", "Planet", 1L,
