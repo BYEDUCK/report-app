@@ -33,7 +33,7 @@ public class ReportController {
     @GetMapping("/report")
     public ReportResponse getAllReports() {
         return new ReportResponse(
-                reportService.getReportsByCharacterPhraseAndPlanetName(null ,null),
+                reportService.getAllReports(),
                 "", ""
         );
     }

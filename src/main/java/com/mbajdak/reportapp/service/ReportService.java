@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ReportService {
     List<Report> getReportsByCharacterPhraseAndPlanetName(String characterPhrase, String planetName);
+    List<Report> getAllReports();
     void deleteAll();
 }

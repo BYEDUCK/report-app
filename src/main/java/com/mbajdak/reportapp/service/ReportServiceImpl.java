@@ -28,6 +28,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public List<Report> getAllReports() {
+        return reportRepository.findAll();
+    }
+
+    @Override
     public void deleteAll() {
         reportRepository.deleteAll();
     }
