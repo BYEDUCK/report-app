@@ -1,11 +1,13 @@
 package com.mbajdak.reportapp.service;
 
+import com.mbajdak.reportapp.domain.Planet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -17,7 +19,9 @@ class PlanetServiceImplIT {
     @Test
     void getPlanetUrlForName() throws IOException {
         String planetName = "Alderaan";
-        String planetUrl = planetService.getPlanetUrlForName(planetName);
-        assertEquals("https://swapi.co/api/planets/2/", planetUrl);
+        Planet planet = planetService.getPlanetForName(planetName);
+        assertNotNull(planet);
+        assertEquals(2, planet.getId().intValue());
+        assertEquals(planetName, planet.getName());
     }
 }
