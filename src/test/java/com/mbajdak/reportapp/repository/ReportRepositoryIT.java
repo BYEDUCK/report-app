@@ -15,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
+@RunWith(SpringRunner.class)
 public class ReportRepositoryIT {
 
     @Autowired
