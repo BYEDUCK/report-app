@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class PlanetServiceImplIT {
+public class PlanetServiceImplIT {
 
     @Autowired
     private PlanetService planetService;
