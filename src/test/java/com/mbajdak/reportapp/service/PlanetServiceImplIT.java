@@ -1,6 +1,6 @@
 package com.mbajdak.reportapp.service;
 
-import com.mbajdak.reportapp.domain.Planet;
+import com.mbajdak.reportapp.domain.PlanetDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ class PlanetServiceImplIT {
     @Test
     void getPlanetUrlForName() throws IOException {
         String planetName = "Alderaan";
-        Planet planet = planetService.getPlanetForName(planetName);
+        PlanetDTO planet = planetService.getPlanetForName(planetName);
         assertNotNull(planet);
         assertEquals(2, planet.getId().intValue());
         assertEquals(planetName, planet.getName());

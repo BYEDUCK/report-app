@@ -3,6 +3,7 @@ package com.mbajdak.reportapp.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mbajdak.reportapp.domain.Planet;
+import com.mbajdak.reportapp.domain.PlanetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,11 @@ public class PlanetServiceImpl extends ExternalApiCallServiceBase implements Pla
     }
 
     @Override
-    public Planet getPlanetForName(String planetName) throws IOException {
+    public PlanetDTO getPlanetForName(String planetName) throws IOException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(EXTERNAL_SERVICE_URL)
                 .queryParam("search", planetName);
         ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(response.getBody());
-        String url = getUrlFromJsonResultsContainsOne(root);
-        return new Planet(planetName, url);
+        Planet planet = getObjectFromJsonResponse(Planet.class, response);
+        return PlanetDTO.fromPlanet(planet);
     }
 }

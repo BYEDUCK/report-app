@@ -1,5 +1,6 @@
 package com.mbajdak.reportapp.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -19,21 +20,21 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(name = "character_id")
+    private Integer characterId;
+
     @Column(name = "character_name")
     private String characterName;
+
+    @Column(name = "planet_id")
+    private Integer planetId;
 
     @Column(name = "planet_name")
     private String planetName;
 
     @Column(name = "film_id")
-    private Long filmId;
+    private Integer filmId;
 
     @Column(name = "film_name")
     private String filmName;
-
-    @Column(name = "character_id")
-    private Long characterId;
-
-    @Column(name = "planet_id")
-    private Long planetId;
 }

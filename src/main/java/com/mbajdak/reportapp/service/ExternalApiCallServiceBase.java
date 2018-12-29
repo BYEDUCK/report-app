@@ -1,14 +1,18 @@
 package com.mbajdak.reportapp.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 public abstract class ExternalApiCallServiceBase {
 
@@ -23,21 +27,35 @@ public abstract class ExternalApiCallServiceBase {
         entity = new HttpEntity<>("parameters", httpHeaders);
     }
 
-    private String getFieldFromJsonResultsContainsOne(String fieldName, JsonNode root) {
-        JsonNode count = root.path("count");
-        if (count.toString().equals("1")) {
+    @SuppressWarnings("Duplicates")
+    <T> List<T> getObjectsFromJsonResponse(Class<T> clazz, ResponseEntity<String> response) throws IOException {
+        List<T> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+        JsonNode results = root.path("results");
+        Iterator<JsonNode> iterator = results.elements();
+        while (iterator.hasNext())
+            result.add(mapper.readValue(iterator.next().toString(), clazz));
+        return result;
+    }
+
+    <T> T getObjectFromJsonResponse(Class<T> clazz, ResponseEntity<String> response) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+        if (root.path("count").asText().equals("1")) {
             JsonNode results = root.path("results");
             Iterator<JsonNode> iterator = results.elements();
-            if (iterator.hasNext()) {
-                JsonNode result = iterator.next();
-                return result.path(fieldName).asText();
-            } else
+            if (iterator.hasNext())
+                return mapper.readValue(iterator.next().toString(), clazz);
+            else
                 return null;
         } else
             return null;
     }
 
-    String getUrlFromJsonResultsContainsOne(JsonNode root) {
-        return getFieldFromJsonResultsContainsOne("url", root);
+    <T> T getObjectFromJsonResponsePlain(Class<T> clazz, ResponseEntity<String> response) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+        return mapper.readValue(root.toString(), clazz);
     }
 }

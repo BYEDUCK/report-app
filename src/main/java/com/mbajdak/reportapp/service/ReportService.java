@@ -10,4 +10,6 @@ public interface ReportService {
     List<Report> getAllReports();
 
     void deleteAll();
+
+    List<Report> saveAll(List<Report> reports);
 }
