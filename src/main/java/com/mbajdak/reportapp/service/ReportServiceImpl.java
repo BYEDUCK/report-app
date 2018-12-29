@@ -39,6 +39,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<Report> saveAll(List<Report> reports) {
+        if (reports.isEmpty())
+            return new ArrayList<>();
         return reportRepository.saveAll(reports);
     }
 }
