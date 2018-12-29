@@ -36,4 +36,9 @@ public class ReportServiceImpl implements ReportService {
     public void deleteAll() {
         reportRepository.deleteAll();
     }
+
+    @Override
+    public List<Report> saveAll(List<Report> reports) {
+        return reportRepository.saveAll(reports);
+    }
 }
